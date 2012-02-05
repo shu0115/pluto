@@ -34,7 +34,9 @@
     <td>
       <%#= link_to "Show", task_path(task) %>
       <%#= link_to "Edit", edit_task_path(task) %>
-      <%= link_to "Delete", { :action => 'destroy', :id => task.id }, :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
+      <%# FIXME: confirmオプションだとポップアップが二重に表示される %>
+      <%#= link_to "Delete", { :action => 'destroy', :id => task.id }, :confirm => "#{t("web-app-theme.confirm", :default => "本当に削除してもよろしいですか？")}" %>
+      <%= link_to "Delete", { :action => 'destroy', :id => task.id }, :onClick=>"return confirm('本当に削除してもよろしいですか？');" %>
     </td>
     </tr>
     <% } -%>

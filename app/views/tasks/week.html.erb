@@ -35,6 +35,7 @@
       <%#= link_to "Show", task_path(task) %>
       <%#= link_to "Edit", edit_task_path(task) %>
       <%#= link_to "Destroy", task_path(task), :method => :delete, :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
+      <%= link_to "Delete", { :action => 'destroy', :id => task.id }, :onClick=>"return confirm('本当に削除してもよろしいですか？');" %>
     </td>
     </tr>
     <% } -%>
