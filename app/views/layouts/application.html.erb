@@ -34,17 +34,25 @@
             <span class="i-bar"></span>
             <span class="i-bar"></span>
           </a>
-          <a class="brand" href="#">Pluto</a>
+          <a class="brand" href="/">Pluto</a>
           <div class="container nav-collapse">
             <ul class="nav">
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
-                <% if current_user %>
+              <% if false %>
+              <li><%= link_to "Link1", "/path1"  %></li>
+              <li><%= link_to "Link2", "/path2"  %></li>
+              <li><%= link_to "Link3", "/path3"  %></li>
+              <% end %>
+              
+              <% if current_user %>
+                <%# ログイン済み %>
+                <li><%= link_to "Day" , :controller => 'tasks', :action => 'day' %></li>
+                <li><%= link_to "Week" , :controller => 'tasks', :action => 'week' %></li>
+                <li><%= link_to "Month" , :controller => 'tasks', :action => 'month' %></li>
                 <li><%= link_to "Logout" , logout_path %></li>
-                <% else %>
+              <% else %>
+                <%# 未ログイン %>
                 <li><%= link_to "Login", "/auth/#{if Rails.env.production? then 'twitter' else 'developer' end}" %></li>
-                <% end %>
+              <% end %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -65,6 +73,8 @@
             <% end %>
             <%= yield %>
             </div>
+            
+            <% if false %>
             <div class="span1">&nbsp;</div>
             <div class="span3">
               <div class="well sidebar-nav">
@@ -75,8 +85,10 @@
                     <li><%= link_to "Link2", "/path2"  %></li>
                     <li><%= link_to "Link3", "/path3"  %></li>
                 </ul>
+              </div>
             </div>
-           </div>
+            <% end %>
+            
           </div>
         </div>
 

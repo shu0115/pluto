@@ -1,5 +1,5 @@
 Pluto::Application.routes.draw do
-  resources :tasks
+#  resources :tasks
 
   get "top/index"
 

@@ -1,4 +1,7 @@
+# coding: utf-8
 class TasksController < ApplicationController
+
+=begin
   # GET /tasks
   # GET /tasks.json
   def index
@@ -68,16 +71,60 @@ class TasksController < ApplicationController
       end
     end
   end
+=end
 
-  # DELETE /tasks/1
-  # DELETE /tasks/1.json
-  def destroy
-    @task = Task.find(params[:id])
-    @task.destroy
-
-    respond_to do |format|
-      format.html { redirect_to tasks_url }
-      format.json { head :no_content }
-    end
+  #-----#
+  # day #
+  #-----#
+  def day
+    @task = Task.new
+    @tasks = Task.where( :user_id => session[:user_id], :span => "day" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
   end
+  
+  #------#
+  # week #
+  #------#
+  def week
+    @task = Task.new
+    @tasks = Task.where( :user_id => session[:user_id], :span => "week" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
+  end
+  
+  #-------#
+  # month #
+  #-------#
+  def month
+    @task = Task.new
+    @tasks = Task.where( :user_id => session[:user_id], :span => "month" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
+  end
+  
+  #--------#
+  # create #
+  #--------#
+  def create
+    @task = Task.new( params[:task] )
+    @task.user_id = session[:user_id]
+    @task.added_at = Time.now
+
+    unless @task.save
+      alert = "タスクの作成に失敗しました。"
+    end
+
+    redirect_to :action => @task.span, :alert => alert
+  end
+
+  #---------#
+  # destroy #
+  #---------#
+  def destroy
+    task = Task.where( :user_id => session[:user_id], :id => params[:id] ).first
+    result = task.destroy
+    print "[ result ] : " ; p result ;
+    
+    unless result
+      alert = "タスクの作成に失敗しました。"
+    end
+    
+    redirect_to :action => task.span, :alert => alert
+  end
+
 end

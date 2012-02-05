@@ -57,3 +57,6 @@ module Pluto
     config.assets.version = '1.0'
   end
 end
+
+# 表示数
+LIST_LIMIT = 500

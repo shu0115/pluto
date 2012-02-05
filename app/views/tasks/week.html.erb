@@ -1,0 +1,42 @@
+<h2>Week</h2>
+
+<%= form_for @task, :url => { :action => 'create' }, :html => { :class => :form } do |f| -%>
+  <%= f.hidden_field :span, { :value => 'week' } %>
+
+  <div class="clearfix">
+     <%= f.label :title, t("activerecord.attributes.task.title", :default => "タスク"), :class => :label %>
+    <div class="input">
+      <%= f.text_field :title, :class => 'text_field' %>
+    </div>
+  </div>
+  
+  <div class="form-actions">
+    <button class="btn primary" type="submit">Add</button>
+  </div>
+<% end -%>
+
+<table class="table table-striped">
+ <thead>
+  <tr>
+    <th>No.</th>
+    <th>タスク</th>
+    <th>追加日</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+    
+  <% @tasks.each_with_index{ |task, index| -%>
+   <tr>
+    <td><%= index + 1 %></td>
+    <td><%= task.title %></td>
+    <td><%= task.added_at.strftime("%Y年%m月%d日") unless task.added_at.blank? %></td>
+    <td>
+      <%#= link_to "Show", task_path(task) %>
+      <%#= link_to "Edit", edit_task_path(task) %>
+      <%#= link_to "Destroy", task_path(task), :method => :delete, :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
+    </td>
+    </tr>
+    <% } -%>
+   </tbody>
+</table>
