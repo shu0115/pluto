@@ -35,19 +35,15 @@
             <span class="i-bar"></span>
           </a>
           <a class="brand" href="/">Pluto</a>
+          <%# FIXME: ↓のクラス指定があると(Safari,Chrome)以外でリストメニューが表示されない 2012/02/11 %>
           <div class="container nav-collapse">
-            <ul class="nav">
-              <% if false %>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-              <% end %>
-              
+          <ul class="nav">
               <% if current_user %>
                 <%# ログイン済み %>
                 <li><%= link_to "Day" , :controller => 'tasks', :action => 'day' %></li>
                 <li><%= link_to "Week" , :controller => 'tasks', :action => 'week' %></li>
                 <li><%= link_to "Month" , :controller => 'tasks', :action => 'month' %></li>
+                <li><%= link_to "Comp" , :controller => 'tasks', :action => 'comp' %></li>
                 <li><%= link_to "Logout" , logout_path %></li>
               <% else %>
                 <%# 未ログイン %>
@@ -73,27 +69,11 @@
             <% end %>
             <%= yield %>
             </div>
-            
-            <% if false %>
-            <div class="span1">&nbsp;</div>
-            <div class="span3">
-              <div class="well sidebar-nav">
-                <h3>Sidebar</h3>
-                 <ul class="nav nav-list">
-                    <li class="nav-header">Sidebar</li>
-                    <li><%= link_to "Link1", "/path1"  %></li>
-                    <li><%= link_to "Link2", "/path2"  %></li>
-                    <li><%= link_to "Link3", "/path3"  %></li>
-                </ul>
-              </div>
-            </div>
-            <% end %>
-            
           </div>
         </div>
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; shu_0115 2012</p>
       </footer>
 
     </div> <!-- /container -->

@@ -5,6 +5,7 @@ class CreateTasks < ActiveRecord::Migration
       t.string :title
       t.string :span
       t.integer :priority, :default => 0
+      t.boolean :complete_flag, :default => false
       t.timestamp :added_at
       t.timestamp :completed_at
 

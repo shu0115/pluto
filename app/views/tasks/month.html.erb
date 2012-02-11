@@ -18,6 +18,7 @@
 <table class="table table-striped">
  <thead>
   <tr>
+    <th></th>
     <th>No.</th>
     <th>タスク</th>
     <th>追加日</th>
@@ -28,9 +29,19 @@
     
   <% @tasks.each_with_index{ |task, index| -%>
    <tr>
+    <td>
+      <% if task.priority > 0 %>
+        <%= link_to "★", { :action => 'priority', :id => task.id, :priority => 0 } %>
+      <% else %>
+        <%= link_to "☆", { :action => 'priority', :id => task.id, :priority => 1 } %>
+      <% end %>
+    </td>
     <td><%= index + 1 %></td>
     <td><%= task.title %></td>
     <td><%= task.added_at.strftime("%Y年%m月%d日") unless task.added_at.blank? %></td>
+    <td>
+      <%= link_to "Done", { :action => 'done', :id => task.id }, :onClick=>"return confirm('完了します。よろしいですか？');" %>
+    </td>
     <td>
       <%#= link_to "Show", task_path(task) %>
       <%#= link_to "Edit", edit_task_path(task) %>

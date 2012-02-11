@@ -1,0 +1,25 @@
+<h2>Comp</h2>
+
+<table class="table table-striped">
+ <thead>
+  <tr>
+    <th>No.</th>
+    <th>ラベル</th>
+    <th>タスク</th>
+    <th>完了日</th>
+    <th>追加日</th>
+  </tr>
+  </thead>
+  
+  <tbody>
+  <% @tasks.each_with_index{ |task, index| -%>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= task.span %></td>
+      <td><%= task.title %></td>
+      <td><%= task.completed_at.strftime("%Y年%m月%d日") unless task.completed_at.blank? %></td>
+      <td><%= task.added_at.strftime("%Y年%m月%d日") unless task.added_at.blank? %></td>
+    </tr>
+  <% } -%>
+  </tbody>
+</table>

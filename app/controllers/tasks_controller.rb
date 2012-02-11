@@ -78,7 +78,7 @@ class TasksController < ApplicationController
   #-----#
   def day
     @task = Task.new
-    @tasks = Task.where( :user_id => session[:user_id], :span => "day" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
+    @tasks = Task.incomp.where( :user_id => session[:user_id], :span => "day" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
   end
   
   #------#
@@ -86,7 +86,7 @@ class TasksController < ApplicationController
   #------#
   def week
     @task = Task.new
-    @tasks = Task.where( :user_id => session[:user_id], :span => "week" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
+    @tasks = Task.incomp.where( :user_id => session[:user_id], :span => "week" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
   end
   
   #-------#
@@ -94,9 +94,16 @@ class TasksController < ApplicationController
   #-------#
   def month
     @task = Task.new
-    @tasks = Task.where( :user_id => session[:user_id], :span => "month" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
+    @tasks = Task.incomp.where( :user_id => session[:user_id], :span => "month" ).limit( LIST_LIMIT ).order( 'priority DESC, added_at DESC' )
   end
   
+  #------#
+  # comp #
+  #------#
+  def comp
+    @tasks = Task.comp.where( :user_id => session[:user_id] ).limit( LIST_LIMIT ).order( 'completed_at DESC' )
+  end
+
   #--------#
   # create #
   #--------#
@@ -112,13 +119,40 @@ class TasksController < ApplicationController
     redirect_to :action => @task.span, :alert => alert
   end
 
+  #------#
+  # done #
+  #------#
+  def done
+    task = Task.where( :user_id => session[:user_id], :id => params[:id] ).first
+    result = task.update_attributes( :complete_flag => true, :completed_at => Time.now )
+    
+    unless result
+      alert = "タスクの完了に失敗しました。"
+    end
+    
+    redirect_to :action => task.span, :alert => alert
+  end
+
+  #----------#
+  # priority #
+  #----------#
+  def priority
+    task = Task.where( :user_id => session[:user_id], :id => params[:id] ).first
+    result = task.update_attributes( :priority => params[:priority] )
+    
+    unless result
+      alert = "更新が失敗しました。"
+    end
+    
+    redirect_to :action => task.span, :alert => alert
+  end
+
   #---------#
   # destroy #
   #---------#
   def destroy
     task = Task.where( :user_id => session[:user_id], :id => params[:id] ).first
     result = task.destroy
-    print "[ result ] : " ; p result ;
     
     unless result
       alert = "タスクの作成に失敗しました。"

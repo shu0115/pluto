@@ -1,5 +1,6 @@
 Pluto::Application.routes.draw do
 #  resources :tasks
+  match "tasks", :controller => "tasks", :action => "day"
 
   get "top/index"
 
@@ -63,4 +64,5 @@ Pluto::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id))(.:format)'
+  match ':controller(/:action)', :to => 'users#show'
 end
